@@ -1,0 +1,57 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DeltaTrack.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dataContexts="using:DeltaTrack.DataContexts"
+    xmlns:Converters="using:DeltaTrack.Helpers.Converters"
+    x:Class="DeltaTrack.Views.Dashboard"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Converters:RouteToFontColorConverter x:Key="RouteToFontColorConverter"/>
+        <Converters:RouteToSolidColorBrushConverter x:Key="RouteToSolidColorBrushConverter"/>
+        <DataTemplate x:Key="TrainArrivalTemplate">
+            <Grid Background="{Binding Route, Converter={StaticResource RouteToSolidColorBrushConverter}}" d:DesignWidth="1225" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition MinWidth="30" Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding DestinationName}" Style="{StaticResource TitleTextBlockStyle}" FontSize="50" FontWeight="Bold" TextAlignment="Center" Foreground="{Binding Route}" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" Margin="10,5"/>
+                <TextBlock Text="{Binding ArrivalDisplayText}" Style="{StaticResource CaptionTextBlockStyle}" TextWrapping="NoWrap" FontSize="40" TextAlignment="Center" FontWeight="Bold" Foreground="{Binding Route, Converter={StaticResource RouteToFontColorConverter}}" d:LayoutOverrides="LeftPosition, RightPosition" Grid.Column="1" Margin="10,5"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Page.DataContext>
+        <dataContexts:DashboardData/>
+    </Page.DataContext>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid d:LayoutOverrides="LeftPosition, RightPosition" d:IsLocked="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1" Margin="10,0,0,0" d:IsLocked="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="clockTextBlock" Style="{StaticResource BaseTextBlockStyle}" TextWrapping="Wrap" Text="{Binding ClockDisplay, Mode=OneWay}" FontSize="50" VerticalAlignment="Center" Height="86" HorizontalAlignment="Center" Width="502" TextAlignment="Center"/>
+                <TextBlock x:Name="lastUpdateTextBlock" Style="{StaticResource BaseTextBlockStyle}" TextWrapping="Wrap" Text="{Binding LastUpdateTimeDisplay, Mode=OneWay}" FontSize="25" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Margin="3.526,12.374,-1.13,13.874" Grid.Row="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" TextAlignment="Center">
+                    <TextBlock.RenderTransform>
+                        <CompositeTransform SkewX="-1.953" TranslateX="-1.466"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+            </Grid>
+
+            <TextBlock x:Name="textBlock" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="Wrap" FontSize="50" Margin="0,39,0,38" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrentStation.StationName}" FontWeight="Bold" TextAlignment="Center" Width="768" d:IsLocked="True"/>
+        </Grid>
+        <ListView x:Name="arrivalsListView" d:LayoutOverrides="Width, LeftPosition, RightPosition, TopPosition, BottomPosition" ItemsSource="{Binding TrainArrivals}" ItemTemplate="{StaticResource TrainArrivalTemplate}" SelectionMode="None" Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+
+    </Grid>
+</Page>

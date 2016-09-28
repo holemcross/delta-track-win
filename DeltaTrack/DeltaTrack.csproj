@@ -97,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Abbreviation.cs" />
+    <Compile Include="Helpers\Converters\RouteConverter.cs" />
     <Compile Include="Helpers\Extensions\EnumExtensions.cs" />
     <Compile Include="Helpers\RouteHelper.cs" />
     <Compile Include="Helpers\UriHelpers.cs" />
@@ -114,6 +115,11 @@
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="ViewModels\CtaArrivalsViewModel.cs" />
     <Compile Include="ViewModels\CtaStationStopViewModel.cs" />
+    <Compile Include="DataContexts\DashboardData.cs" />
+    <Compile Include="ViewModels\TrainArrivalCollection.cs" />
+    <Compile Include="Views\Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -140,6 +146,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

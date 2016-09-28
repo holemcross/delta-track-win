@@ -16,5 +16,6 @@ namespace DeltaTrack.ViewModels
             TimeStamp = DateTime.Now;
             ErrorCode = 0;
         }
+
     }
 }

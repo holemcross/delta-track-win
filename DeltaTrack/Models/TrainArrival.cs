@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DeltaTrack.Helpers;
+using System;
+using Windows.UI;
 
 namespace DeltaTrack.Models
 {
@@ -16,5 +18,37 @@ namespace DeltaTrack.Models
         public bool IsApproaching { get; set; }
         public bool IsNotLiveData { get; set; }
         public bool IsDelayed { get; set; }
+
+        public TimeSpan GetArrivalTimeSpan()
+        {
+            return ArrivalTime - DateTime.Now;
+        }
+
+        public string ArrivalDisplayText
+        {
+            get
+            {
+                string displayMessage;
+                var arrivalTimeSpan = GetArrivalTimeSpan();
+
+                if (arrivalTimeSpan.Minutes < 1 || IsApproaching)
+                {
+                    displayMessage = "Due";
+                }
+                else
+                {
+                    displayMessage = $"{arrivalTimeSpan.Minutes}.{(arrivalTimeSpan.Seconds/60f).ToString().Substring(2)} mins";
+                }
+
+                if (IsDelayed)
+                {
+                    displayMessage += " Dly";
+                }
+
+                return displayMessage;
+            }
+        }
+
+        public Color RouteColor => RouteHelper.GetColorByRoute(Route);
     }
 }
